@@ -1,0 +1,206 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Responsive Tour and Travel Agency Website Design Tutorial</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="{% static 'travelhome/style.css' %}">
+    <script src="{% static 'travelhome/js/script.js' %}"></script>
+    <!-- Font Awesome CDN link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+<body>
+  <header>
+
+    <div id="menu-bar" class="fas fa-bars"></div>
+
+    <a href="#" class="logo"><span>T</span>ravel</a>
+
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#book">book</a>
+        <a href="#packages">packages</a>
+        <a href="#services">services</a>
+        <a href="#gallery">gallery</a>
+        <a href="#review">review</a>
+        <a href="#contact">contact</a>
+    </nav>
+    <div class="icons">
+        <i class="fas fa-search" id="search-btn"></i>
+        <i class="fas fa-user" id="login-btn"></i>
+    </div>
+
+    <form  class="search-bar-container">
+        <input type="search" id="search-bar" placeholder="search here...">
+        <label for="search-bar" class="fas fa-search"></label>
+    </form>
+
+</header>
+
+{% comment %} <div class="login-form-container">
+
+    <i class="fas fa-times" id="form-close"></i>
+
+    <form action="" method="POST">
+        <h3>login</h3>
+        <input type="email" class="box" placeholder="enter your email" name="email">
+        <input type="password" class="box" placeholder="enter your password" name="password">
+        {%csrf_token%}
+        {{ form.as_p }}
+        <input type="submit" value="login now" class="btn">
+        <input type="checkbox" id="remember">
+        <label for="remember">remember me</label>
+        <p>forget password? <a href="#">click here</a></p>
+        <p>don't have and account? <a href="#">register now</a></p>
+    </form>
+
+</div> {% endcomment %} 
+{% block  login %}{% endblock  %}
+
+<!-- home section starts  -->
+<section class="home" id="home">
+    {% for data_b in data_banners %}
+        <div class="content">
+            <h3>{{ data_b.banner_sub_text }}</h3>
+            <p>{{ data_b.banner_sub_text }}</p>
+            <a href="#" class="btn">discover more</a>
+        </div>
+    
+        <div class="video-container">
+            <video src="{{ data_b.video.url }}" id="video-slider" loop autoplay muted></video>
+        </div>
+    {% endfor %}
+</section>
+
+
+
+
+<!-- book section starts  -->
+
+<section class="book" id="book">
+    <h1 class="heading">
+        <span>b</span>
+        <span>o</span>
+        <span>o</span>
+        <span>k</span>
+        <span class="space"></span>
+        <span>n</span>
+        <span>o</span>
+        <span>w</span>
+    </h1>
+
+    <div class="row">
+
+        <div class="image">
+            {% comment %} <img src="images/book-img.svg" alt=""> {% endcomment %}
+        </div>
+
+        <form action="{% url 'book' %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="inputBox">
+                <h3>where to</h3>
+                <input type="text" name="place_name" placeholder="place name">
+            </div>
+            <div class="inputBox">
+                <h3>how many</h3>
+                <input type="number" name="number_of_guests" placeholder="number of guests">
+            </div>
+            <div class="inputBox">
+                <h3>arrivals</h3>
+                <input type="date" name="arrival_date">
+            </div>
+            <div class="inputBox">
+                <h3>leaving</h3>
+                <input type="date" name="leaving_date">
+            </div>
+            
+            <input type="submit" class="btn" value="book now">
+        </form>
+        
+</section>
+
+
+
+<section class="packages" id="packages">
+
+    <h1 class="heading">
+        <span>p</span>
+        <span>a</span>
+        <span>c</span>
+        <span>k</span>
+        <span>a</span>
+        <span>g</span>
+        <span>e</span>
+        <span>s</span>
+    </h1>
+<div class="box-container">
+ {% for package in pack %}
+     <div class="box">
+        <img src="{{ package.gallery_image.url }}" alt="/">
+        <div class="content">
+            <h3> <i class="fas fa-map-marker-alt"></i> {{package.gallery_title}} </h3>
+            <p>{{package.gallery_text}}</p>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+            </div>
+            <div class="price"> {{package.gallery_price}} </div>
+            <a href="#" class="btn">book now</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</section>
+
+
+
+
+
+
+<section class="contact" id="contact">
+    
+    <h1 class="heading">
+        <span>c</span>
+        <span>o</span>
+        <span>n</span>
+        <span>t</span>
+        <span>a</span>
+        <span>c</span>
+        <span>t</span>
+    </h1>
+
+    <div class="row">
+
+        <div class="image">
+            {% comment %} <img src="images/contact-img.svg" alt=""> {% endcomment %}
+        </div>
+
+        <form action="{% url 'contact' %}" method="POST">
+            {% csrf_token %}
+            <div class="inputBox">
+                <input type="text" placeholder="name" name="email_name">
+                <input type="email" placeholder="email" name="email">
+            </div>
+            <div class="inputBox">
+                <input type="number" placeholder="number" name="people_number">
+                <input type="text" placeholder="subject" name="subject">
+            </div>
+            <textarea placeholder="message" name="message" id="" cols="30" rows="10"></textarea>
+            {{ form.as_p }}
+            <input type="submit" class="btn" value="send message">
+        </form>
+        
+
+    </div>
+    
+</section>
+
+</body>
+</html>
