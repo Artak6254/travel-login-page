@@ -58,28 +58,30 @@ def contact_success(request, contact_id):
 
 
 
+
 def registerPage(request):
     if request.user.is_authenticated:
         return redirect('')
     else:    
-        form = UserCreationForm()
+        form = CreateUserForm()  # Use custom form with email
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
             if form.is_valid():
-                form.save()
-                user = form.cleaned_data.get('username')
-                messages.success(request, 'Account was created for' + user)
+                user = form.save()
+                username = form.cleaned_data.get('username')
+                messages.success(request, f'Account created for {username}!')
 
-                return redirect('login')
-    context = {'form': form }        
-    return render(request, 'travelhome/register.html', context)
+                return redirect('login')  # Redirect to login page after registration
+
+        context = {'form': form}        
+        return render(request, 'travelhome/register.html', context)
 
 
             
 
 def loginPage(request):
     if request.user.is_authenticated:
-        return redirect('')#tox tani account
+        return redirect('account')#tox tani account
     else:    
         if request.method == 'POST':
             username = request.POST.get('username')
@@ -89,7 +91,7 @@ def loginPage(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('')
+                return redirect('account')
             else:
                 messages.info(request, 'Username and password incorrect')    
         
@@ -101,3 +103,7 @@ def logoutUser(request):
     logout(request)
     return redirect('login')    
 
+
+@login_required
+def accountPage(request):
+    return render(request, 'travelhome/account.html', {'user': request.user})

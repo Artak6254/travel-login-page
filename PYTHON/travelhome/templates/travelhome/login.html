@@ -1,13 +1,16 @@
-
+{% load static %} 
+<head>
+    <link rel="stylesheet" href="{% static 'travelhome/style.css' %}">
+</head>
 {% block login %}
 <div class="login-form-container">
 
     <i class="fas fa-times" id="form-close"></i>
 
-    <form action="" method="POST">
-        {%csrf_token%}
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
         <h3>login</h3>
-        <input type="email" class="box" placeholder="enter your email" name="email">
+        <input type="name" class="box" placeholder="enter your name" name="username">
         <input type="password" class="box" placeholder="enter your password" name="password">
         <input type="submit" value="login now" class="btn">
         <input type="checkbox" id="remember">

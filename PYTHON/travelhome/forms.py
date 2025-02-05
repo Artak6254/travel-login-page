@@ -17,5 +17,6 @@ class ContactForm(forms.ModelForm):
 
 
 class CreateUserForm(UserCreationForm):
+    email = forms.EmailField(required=True)  # Add email field
     model = User
     fields = ['username','email','password1','password2']
